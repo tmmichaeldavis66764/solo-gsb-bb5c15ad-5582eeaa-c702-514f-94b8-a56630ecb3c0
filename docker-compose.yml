@@ -1,0 +1,15 @@
+services:
+  api:
+    build: .
+    image: radio-df-api:latest
+    container_name: radio-df-api
+    ports:
+      # 宿主机端口:容器端口。宿主机端口可用环境变量 HOST_PORT 覆盖，默认 8000
+      - "${HOST_PORT:-8000}:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
