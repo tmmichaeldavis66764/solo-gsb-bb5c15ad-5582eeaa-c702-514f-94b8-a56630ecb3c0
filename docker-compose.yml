@@ -1,0 +1,11 @@
+services:
+  radio-df-api:
+    build: .
+    image: radio-df-api:latest
+    container_name: radio-df-api
+    ports:
+      # 宿主机端口:容器端口。可通过环境变量 HOST_PORT / PORT 覆盖
+      - "${HOST_PORT:-8000}:${PORT:-8000}"
+    environment:
+      PORT: "${PORT:-8000}"
+    restart: unless-stopped
